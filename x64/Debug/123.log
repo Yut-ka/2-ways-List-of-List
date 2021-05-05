@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (SAOD_LAB3_2.vcxproj, SAOD_LAB3_3.vcxproj, SAOD_LAB3_5.vcxproj, SAOD_LAB4_1.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Main.cpp
+  objetos.cpp
+  Создание кода...
+C:\Users\danil\source\repos\SAOD_LAB4_3\menuconsolekey\Main.cpp(131): warning C4715: menu: значение возвращается не при всех путях выполнения
+C:\Users\danil\source\repos\SAOD_LAB4_3\menuconsolekey\Main.cpp(191): warning C4715: text: значение возвращается не при всех путях выполнения
+  123.vcxproj -> C:\Users\danil\source\repos\SAOD_LAB4_3\x64\Debug\SAOD_LAB4_3.exe

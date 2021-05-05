@@ -1,0 +1,10 @@
+C:\Users\danil\source\repos\SOAD_LAB3_2\x64\Debug\SAOD_LAB3_2.exe
+C:\Users\danil\source\repos\SOAD_LAB3_2\x64\Debug\SAOD_LAB3_2.pdb
+C:\Users\danil\source\repos\SAOD_LAB3_3\x64\Debug\SAOD_LAB3_3.exe
+C:\Users\danil\source\repos\SAOD_LAB3_3\x64\Debug\SAOD_LAB3_3.pdb
+C:\Users\danil\source\repos\SAOD_LAB3_5\x64\Debug\SAOD_LAB3_5.exe
+C:\Users\danil\source\repos\SAOD_LAB3_5\x64\Debug\SAOD_LAB3_5.pdb
+C:\Users\danil\source\repos\SAOD_LAB4_1\x64\Debug\SAOD_LAB4_1.exe
+C:\Users\danil\source\repos\SAOD_LAB4_1\x64\Debug\SAOD_LAB4_1.pdb
+C:\Users\danil\source\repos\SAOD_LAB4_3\x64\Debug\SAOD_LAB4_3.exe
+C:\Users\danil\source\repos\SAOD_LAB4_3\x64\Debug\SAOD_LAB4_3.pdb
