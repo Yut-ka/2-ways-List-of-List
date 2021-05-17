@@ -136,44 +136,47 @@ public:
 		pTemp->inf = inf;
 		return 1;
 	}
-	std::string Delete_Sub(Main_List* list, int t1, int t2) {
-		if (t2 < 1 || t1 < 1) return "Uncorrect enter!";
-		Main_List_Item* pMain = list->pHead;
-		for (int i = 0; i < t1; i++) {
-			if (pMain->right == list->pHead) return 0;
+	std::string Delete_Sub(Main_List* list, int inf1, int inf2) {
+		Main_List_Item* pMain = list->pHead->right;
+		while (pMain != list->pHead) {
+			if (pMain->pSub->pHeadSub->right->inf == inf1) {
+				Sub_List_Item* pCurrent = pMain->pSub->pHeadSub->right;
+				while (pCurrent != pMain->pSub->pHeadSub) {
+					if (pCurrent->inf == inf2) {
+						pCurrent->left->right = pCurrent->right;
+						pCurrent->right->left = pCurrent->left;
+						delete(pCurrent);
+						return "The elemetn of Sub list was deleted.";
+					}
+					pCurrent = pCurrent->right;
+				}
+			}
 			pMain = pMain->right;
 		}
-		Sub_List_Item* pCurrent = pMain->pSub->pHeadSub;
-		for (int i = 0; i < t2; i++) {
-			if (pCurrent->right == pMain->pSub->pHeadSub) return "The number with index : | " + std::to_string(t2) + " | not found.";
-			pCurrent = pCurrent->right;
-		}
-		pCurrent->left->right = pCurrent->right;
-		pCurrent->right->left = pCurrent->left;
-		delete(pCurrent);
-		return "The number with index : | " + std::to_string(t2) + " | was deleted.";
+		return "The element of Sub list not found!";
 	}
 
-	std::string Delete_Main(Main_List* list, int t1) {
-		if (t1 < 1) return "Uncorrect enter!";
-		Main_List_Item* pMain = list->pHead;
-		for (int i = 0; i < t1; i++) {
-			if (pMain->right == list->pHead) return "Uncorrect enter!";
+	std::string Delete_Main(Main_List* list, int inf) {
+		Main_List_Item* pMain = list->pHead->right;
+		while(pMain != list->pHead) {
+			if (pMain->pSub->pHeadSub->right->inf == inf) {
+				Sub_List_Item* pDel;
+				Sub_List_Item* pCurrent = pMain->pSub->pHeadSub->right;
+				while (pCurrent != pMain->pSub->pHeadSub) {
+					pDel = pCurrent;
+					pCurrent = pCurrent->right;
+					pDel->left->right = pDel->right;
+					pDel->right->left = pDel->left;
+					delete(pDel);
+				}
+				pMain->left->right = pMain->right;
+				pMain->right->left = pMain->left;
+				delete(pMain);
+				return "The element of Main list was deleted.";
+			}
 			pMain = pMain->right;
 		}
-		Sub_List_Item* pCurrent = pMain->pSub->pHeadSub->right;
-		Sub_List_Item* pDel;
-		while(pCurrent != pMain->pSub->pHeadSub){
-			pDel = pCurrent;
-			pCurrent = pCurrent->right;
-			pDel->left->right = pDel->right;
-			pDel->right->left = pDel->left;
-			delete(pDel);
-		}
-		pMain->left->right = pMain->right;
-		pMain->right->left = pMain->left;
-		delete(pMain);
-		return "The number with index : | " + std::to_string(t1) + " | was deleted.";
+		return "The element of Main list not found!";	
 	}
 
 	std::string Show(Main_List* list) {
