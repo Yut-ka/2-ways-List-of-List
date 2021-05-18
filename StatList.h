@@ -63,78 +63,83 @@ public:
 	}
 };
 
-	int Push_Main_After(Main_List* list, int t, Sub_List* inf) {
-		if (t < 0) return 0;
-		Main_List_Item* pCurrent = list->pHead;
+	int Push_Main_After(Main_List* list, int inf1, std::string inf2) {
+		Main_List_Item* pCurrent = list->pHead->right;
 		Main_List_Item* pTemp = new Main_List_Item();
-		for (int i = 0; i < t; i++) {
-			if (pCurrent->right == list->pHead) return 0;
+		while(pCurrent != list->pHead || list->pHead->right == list->pHead) {
+			if (pCurrent->pSub->pHeadSub->right->inf == inf1 || list->pHead->right == list->pHead) {
+				pTemp->left = pCurrent;
+				pTemp->right = pCurrent->right;
+				pCurrent->right->left = pTemp;
+				pCurrent->right = pTemp;
+				pTemp->pSub = new Sub_List(inf2);
+				return 1;
+			}
 			pCurrent = pCurrent->right;
 		}
-		pTemp->left = pCurrent;
-		pTemp->right = pCurrent->right;
-		pCurrent->right->left = pTemp;
-		pCurrent->right = pTemp;
-		pTemp->pSub = inf;
-		return 1;
+		return 0;
 	}
 
-	int Push_Main_Before(Main_List* list, int t, Sub_List* inf) {
-		if (t < 1) return 0;
-		Main_List_Item* pCurrent = list->pHead;
+	int Push_Main_Before(Main_List* list, int inf1, std::string inf2) {
+		Main_List_Item* pCurrent = list->pHead->right;
 		Main_List_Item* pTemp = new Main_List_Item();
-		for (int i = 0; i < t; i++) {
-			if (pCurrent->right == list->pHead) return 0;
+		while(pCurrent != list->pHead) {
+			if (pCurrent->pSub->pHeadSub->right->inf == inf1) {
+				pCurrent->left->right = pTemp;
+				pTemp->left = pCurrent->left;
+				pTemp->right = pCurrent;
+				pCurrent->left = pTemp;
+				pTemp->pSub = new Sub_List(inf2);
+				return 1;
+			}
 			pCurrent = pCurrent->right;
 		}
-		pCurrent->left->right = pTemp;
-		pTemp->left = pCurrent->left;
-		pTemp->right = pCurrent;
-		pCurrent->left = pTemp;
-		pTemp->pSub = inf;
-		return 1;
+		return 0;
 	}
 
 	int Push_After(Main_List* list, int t1, int t2, int inf) {
-		if (t2 < 0 || t1 < 0) return 0;
-		Main_List_Item* pMain = list->pHead;
-		for (int i = 0; i < t1; i++) {
+		Main_List_Item* pMain = list->pHead->right;
+		while(pMain != list->pHead) {
+			if (pMain->pSub->pHeadSub->right->inf == t1) {
+				Sub_List_Item* pCurrent = pMain->pSub->pHeadSub->right;
+				while (pCurrent != pMain->pSub->pHeadSub) {
+					if (pCurrent->inf == t2) {
+						Sub_List_Item* pTemp = new Sub_List_Item();
+						pTemp->left = pCurrent;
+						pTemp->right = pCurrent->right;
+						pCurrent->right->left = pTemp;
+						pCurrent->right = pTemp;
+						pTemp->inf = inf;
+						return 1;
+					}
+					pCurrent = pCurrent->right;
+				}
+			}
 			pMain = pMain->right;
-			if (pMain == list->pHead) return 2;
 		}
-		Sub_List_Item* pCurrent = pMain->pSub->pHeadSub;
-		Sub_List_Item* pTemp = new Sub_List_Item();
-		for (int i = 0; i < t2; i++) {
-			if (pCurrent->right == pMain->pSub->pHeadSub) return 0;
-			pCurrent = pCurrent->right;
-		}
-		pTemp->left = pCurrent;
-		pTemp->right = pCurrent->right;
-		pCurrent->right->left = pTemp;
-		pCurrent->right = pTemp;
-		pTemp->inf = inf;
-		return 1;
+		return 0;
 	}
 	int Push_Before(Main_List* list, int t1, int t2, int inf) {
-		if (t2 < 1 || t1 < 1) return 0;
-		Main_List_Item* pMain = list->pHead;
-		for (int i = 0; i < t1; i++) {
+		Main_List_Item* pMain = list->pHead->right;
+		while(pMain != list->pHead) {
+			if (pMain->pSub->pHeadSub->right->inf == t1) {
+				Sub_List_Item* pCurrent = pMain->pSub->pHeadSub->right;
+				while (pCurrent != pMain->pSub->pHeadSub) {
+					if (pCurrent->inf == t2) {
+						Sub_List_Item* pTemp = new Sub_List_Item();
+						pCurrent->left->right = pTemp;
+						pTemp->left = pCurrent->left;
+						pTemp->right = pCurrent;
+						pCurrent->left = pTemp;
+						pTemp->inf = inf;
+						return 1;
+					}
+					pCurrent = pCurrent->right;
+				}
+			}
 			pMain = pMain->right;
-			if (pMain == list->pHead) return 2;
 		}
-
-		Sub_List_Item* pCurrent = pMain->pSub->pHeadSub;
-		Sub_List_Item* pTemp = new Sub_List_Item();
-		for (int i = 0; i < t2; i++) {
-			if (pCurrent->right == pMain->pSub->pHeadSub) return 0;
-			pCurrent = pCurrent->right;
-		}
-		pCurrent->left->right = pTemp;
-		pTemp->left = pCurrent->left;
-		pTemp->right = pCurrent;
-		pCurrent->left = pTemp;
-		pTemp->inf = inf;
-		return 1;
+		return 0;
 	}
 	std::string Delete_Sub(Main_List* list, int inf1, int inf2) {
 		Main_List_Item* pMain = list->pHead->right;
@@ -146,6 +151,11 @@ public:
 						pCurrent->left->right = pCurrent->right;
 						pCurrent->right->left = pCurrent->left;
 						delete(pCurrent);
+						if (pMain->pSub->pHeadSub->right == pMain->pSub->pHeadSub) {
+							pMain->left->right = pMain->right;
+							pMain->right->left = pMain->left;
+							delete(pMain);
+						}
 						return "The elemetn of Sub list was deleted.";
 					}
 					pCurrent = pCurrent->right;
